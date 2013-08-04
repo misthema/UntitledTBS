@@ -6,11 +6,12 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import worldgen.WorldGenerator;
-import worldgen.WorldGenerator.LandType;
-
 public class Test1 extends BasicGame
 {
+
+	/*
+	 * TEST PUSH COMMENT
+	 */
 
 	public Test1(String title)
 	{
@@ -22,7 +23,7 @@ public class Test1 extends BasicGame
 		try
 		{
 			BasicGame game = new Test1( "Perlin noise test #2" );
-			
+
 			AppGameContainer app = new AppGameContainer( game );
 			app.setDisplayMode( 800, 600, false );
 			app.setShowFPS( true );
@@ -38,7 +39,7 @@ public class Test1 extends BasicGame
 	@Override
 	public void init ( GameContainer arg0 ) throws SlickException
 	{
-		
+
 	}
 
 	@Override
