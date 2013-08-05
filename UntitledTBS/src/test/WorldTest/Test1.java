@@ -1,4 +1,4 @@
-package test1;
+package test.WorldTest;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
@@ -8,10 +8,6 @@ import org.newdawn.slick.SlickException;
 
 public class Test1 extends BasicGame
 {
-
-	/*
-	 * TEST PUSH COMMENT
-	 */
 
 	public Test1(String title)
 	{
