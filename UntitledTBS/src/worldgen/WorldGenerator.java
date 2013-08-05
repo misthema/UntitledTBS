@@ -7,27 +7,29 @@ public class WorldGenerator
 		ISLANDIC, STANDARD, MOUNTAINS
 	};
 
-	private HeightMap world;
+	private HeightMap heightMap;
 	private long      seed;
 	private int       width, height;
 	private LandType  type;
 
 	public WorldGenerator(int width, int height)
 	{
-		this.world = new HeightMap( );
+		this.heightMap = new HeightMap( );
 		this.setWidth( width );
 		this.setHeight( height );
 	}
 
 	/* @formatter:off */
-	public void     setType ( LandType type ) { this.type = type; }
-	public LandType getType ( ) { return this.type; }
-	public void     setWidth ( int width ) { this.width = width; }
-	public int      getWidth ( ) { return this.width; }
-	public void     setHeight ( int height ) { this.height = height; }
-	public int      getHeight ( ) { return this.height; }
-	public void     setSeed ( long seed ) { this.seed = seed; }
-	public long     getSeed ( ) { return this.seed; }
+	public HeightMap getHeightMap( ) { return this.heightMap; }
+	
+	public LandType  getType ( ) { return this.type; }
+	public int       getWidth ( ) { return this.width; }
+	public int       getHeight ( ) { return this.height; }
+	public long      getSeed ( ) { return this.seed; }
+	public void      setType ( LandType type ) { this.type = type; }
+	public void      setWidth ( int width ) { this.width = width; }
+	public void      setHeight ( int height ) { this.height = height; }
+	public void      setSeed ( long seed ) { this.seed = seed; }
 	/* @formatter:on */
 
 	public void create ( )
@@ -37,27 +39,32 @@ public class WorldGenerator
 		perlin.setWidth( getWidth( ) );
 		perlin.setHeight( getHeight( ) );
 
-		world.setPerlin( perlin );
-		world.setWaterLevel( 0.0f ); // 0.0f default level
-
 		switch (type)
 		{
 			case ISLANDIC:
 			{
 				perlin.setOctaves( 5 );
 				perlin.setPersistence( 0.5f );
+				break;
 			}
 			case STANDARD:
 			{
 				perlin.setOctaves( 7 );
 				perlin.setPersistence( 0.4f );
+				break;
 			}
 			case MOUNTAINS:
 			{
 				perlin.setOctaves( 8 );
 				perlin.setPersistence( 0.5f );
+				break;
 			}
 		}
+
+		heightMap.setPerlin( perlin );
+		heightMap.setWaterLevel( 0.0f ); // 0.0f default level
+
+		heightMap.build( );
 	}
 
 	public void mergeHeightmaps ( )
