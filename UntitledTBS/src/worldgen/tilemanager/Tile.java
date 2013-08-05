@@ -55,9 +55,9 @@ public class Tile
 	 * @param tt
 	 *            TileType enumerator
 	 */
-	public Tile(int id, int x, int y, TileType tt)
+	public Tile(int x, int y, TileType tt)
 	{
-		this.ID = id;
+		// this.ID = id;
 		this.x = x;
 		this.y = y;
 		this.tileType = tt;

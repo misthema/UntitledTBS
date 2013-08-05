@@ -55,7 +55,7 @@ public class TileManager
 
 		for (Tile tile : tiles)
 		{
-			drawTile( tile );
+			drawTile( tile, tile.getX( ) * 32, tile.getY( ) * 32 );
 		}
 	}
 
@@ -71,25 +71,22 @@ public class TileManager
 	{
 		for (Tile tile : tiles)
 		{
-			int x = tile.getX( );
-			int y = tile.getY( );
+			int x = tile.getX( ) * 32;
+			int y = tile.getY( ) * 32;
 
 			if ((x > startX && x < endX) && (y > startY && y < endY))
 			{
-				drawTile( tile );
+				drawTile( tile, x, y );
 			}
 		}
 	}
 
-	public void drawTile ( Tile tile )
+	public void drawTile ( Tile tile, int x, int y )
 	{
 		// Draw tile from tile-set according to tile ID.
 		int tileID = tile.getType( ).toInt( );
 
 		Image tileImg = tileset.getImage( tileID );
-
-		int x = tile.getX( );
-		int y = tile.getY( );
 
 		tileImg.draw( x, y );
 	}

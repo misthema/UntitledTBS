@@ -1,6 +1,8 @@
 package worldgen;
 
 import worldgen.WorldGenerator.LandType;
+import worldgen.tilemanager.Tile;
+import worldgen.tilemanager.Tile.TileType;
 import worldgen.tilemanager.TileManager;
 
 public class WorldManager
@@ -19,6 +21,13 @@ public class WorldManager
 
 	}
 
+	/* @formatter:off */
+	public TileManager getTileManager( ) { return this.tileManager; }
+	public WorldGenerator getWorldGen( ) { return this.worldgen; }
+	public void setTileManager( TileManager tileManager ) { this.tileManager = tileManager;	}
+	public void setWorldGen( WorldGenerator worldgen ) { this.worldgen = worldgen; } 
+	/* @formatter:on */
+
 	/**
 	 * Initialize WorldManager with default size, seed and random land type.
 	 */
@@ -27,9 +36,11 @@ public class WorldManager
 		assert (tileManager == null) : "WorldManager.tileManager: not set!";
 
 		if (worldgen == null) worldgen = new WorldGenerator( 256, 256 );
-		worldgen.setSeed( 256 );
-		worldgen.setType( randLandType.random( ) );
+		worldgen.setSeed( (long) (Math.random( ) * 100000) );
+		worldgen.setType( LandType.ISLANDIC );// randLandType.random( )
 		worldgen.create( );
+
+		initTileManager( );
 	}
 
 	/**
@@ -48,12 +59,60 @@ public class WorldManager
 		worldgen.setSeed( seed );
 		worldgen.setType( type );
 		worldgen.create( );
+
+		initTileManager( );
 	}
 
-	/* @formatter:off */
-	public TileManager getTileManager( ) { return this.tileManager; }
-	public WorldGenerator getWorldGen( ) { return this.worldgen; }
-	public void setTileManager( TileManager tileManager ) { this.tileManager = tileManager;	}
-	public void setWorldGen( WorldGenerator worldgen ) { this.worldgen = worldgen; } 
-	/* @formatter:on */
+	public void initTileManager ( )
+	{
+		// TODO Better system for deciding a tile for specific height.
+
+		HeightMap hmap = worldgen.getHeightMap( );
+
+		System.out.println( "getHeight( " + worldgen.getWidth( ) + ", "
+		        + worldgen.getHeight( ) + " )" );
+
+		for (int y = 0; y < worldgen.getHeight( ); y++)
+		{
+			for (int x = 0; x < worldgen.getWidth( ); x++)
+			{
+
+				System.out.print( "getHeight( " + x + ", " + y + " ) = " );
+
+				float height = hmap.getHeightValue( x, y );
+				TileType tt = null;
+
+				System.out.println( height );
+
+				if (height >= -1.0 && height < -0.7)
+				{
+					tt = TileType.WATER_DEEP;
+
+				} else if (height >= -0.7 && height < -0.6)
+				{
+					tt = TileType.WATER_AVERAGE;
+
+				} else if (height >= -0.6 && height < -0.5)
+				{
+					tt = TileType.WATER_SHALLOW;
+
+				} else if (height >= -0.5 && height < -0.33)
+				{
+					tt = TileType.LAND_SHORE;
+
+				} else if (height >= -0.33 && height < 0.33)
+				{
+					tt = TileType.LAND_GRASS;
+
+				} else if (height >= 0.33 && height <= 1.0)
+				{
+					tt = TileType.LAND_MOUNTAIN;
+
+				}
+
+				tileManager.add( new Tile( x, y, tt ) );
+
+			}
+		}
+	}
 }

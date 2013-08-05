@@ -52,7 +52,7 @@ public class HeightMap
 			for (int x = 0; x < perlin.getWidth( ); x++)
 			{
 				// Height
-				this.heightmap[x][y] = this.getHeight( perlin.getFloat( x, y ) );
+				this.heightmap[x][y] = perlin.getFloat( x, y );
 			}
 		}
 
@@ -61,10 +61,19 @@ public class HeightMap
 	/*
 	 * Convert perlin noise to useful height value between -1.0 - 1.0.
 	 */
-	public float getHeight ( float val )
+	public float toHeight ( float val )
 	{
 		float height = val * 2.f - 1.f;
 		return clamp( lerp( height, -1.f, waterLevel ) );
+	}
+
+	public float getHeightValue ( int x, int y )
+	{
+		if (x >= 0 && x < heightmap.length && y >= 0 && y < heightmap[0].length)
+		{
+			return toHeight( heightmap[x][y] );
+		}
+		return -1.0f;
 	}
 
 	/*
