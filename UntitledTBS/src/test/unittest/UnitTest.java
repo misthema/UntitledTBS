@@ -42,14 +42,14 @@ public class UnitTest extends BasicGame
 		g.drawString("Hits: " + (unit1.hits(unit2) ? "True" : "False"),
 		             10,
 		             30);
-
-		Input i = gc.getInput();
-		if (i.isKeyDown(Input.KEY_ESCAPE)) gc.exit();
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) throws SlickException
 	{
+		Input i = gc.getInput();
+		if (i.isKeyDown(Input.KEY_ESCAPE)) gc.exit();
+
 		unit1.rotate(1);
 		unit1.move(1);
 
@@ -70,6 +70,11 @@ public class UnitTest extends BasicGame
 			app.setShowFPS(true);
 			app.setTargetFrameRate(60);
 			app.start();
+		}
+		catch (SlickException e)
+		{
+			e.printStackTrace();
+			System.out.println("Error occurred in Slick operation.");
 		}
 		catch (Exception e)
 		{
