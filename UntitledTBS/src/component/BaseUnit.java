@@ -18,9 +18,9 @@ public class BaseUnit
 {
 
 	Vector2f position;
-	Image image;
-	Shape basehit, hit;
-	float angle;
+	Image    image;
+	Shape    basehit, hit;
+	float    angle;
 
 	/**
 	 * Creates a new unit at the top left position with blank image.
@@ -29,10 +29,8 @@ public class BaseUnit
 	 */
 	public BaseUnit() throws SlickException
 	{
-		this.init(new Image(2, 2),
-		          new Vector2f(0, 0),
-		          new Rectangle(0, 0, 1, 1),
-		          0.0f);
+		this.init( new Image( 2, 2 ), new Vector2f( 0, 0 ), new Rectangle( 0,
+		        0, 1, 1 ), 0.0f );
 	}
 
 	/**
@@ -44,11 +42,10 @@ public class BaseUnit
 	 */
 	public BaseUnit(String uri) throws SlickException
 	{
-		Image img = new Image(uri);
-		this.init(img,
-		          new Vector2f(0, 0),
-		          new Rectangle(0, 0, img.getWidth(), img.getHeight()),
-		          0.0f);
+		Image img = new Image( uri );
+		this.init( img, new Vector2f( 0, 0 ),
+		           new Rectangle( 0, 0, img.getWidth( ), img.getHeight( ) ),
+		           0.0f );
 	}
 
 	/**
@@ -63,7 +60,7 @@ public class BaseUnit
 	 * @param angle
 	 *            Angle the unit will start at.
 	 */
-	private void init(Image image, Vector2f pos, Shape hit, float angle)
+	private void init ( Image image, Vector2f pos, Shape hit, float angle )
 	{
 		this.image = image;
 		this.position = pos;
@@ -71,19 +68,17 @@ public class BaseUnit
 		this.angle = angle;
 
 		// Move the shape to corresponding location.
-		this.basehit.setLocation(pos.x + hit.getX(),
-		                         pos.y + hit.getY());
+		this.basehit.setLocation( pos.x + hit.getX( ), pos.y + hit.getY( ) );
 
-		updateHit();
+		updateHit( );
 	}
 
 	/**
 	 * Draws the unit at it's current position and rotation.
 	 */
-	public void draw()
+	public void draw ( )
 	{
-		image.draw(position.x,
-		           position.y);
+		image.draw( position.x, position.y );
 	}
 
 	/**
@@ -92,15 +87,15 @@ public class BaseUnit
 	 * @param ang
 	 *            Angle in degrees.
 	 */
-	public void rotate(float ang)
+	public void rotate ( float ang )
 	{
 		angle += ang;
 		angle %= 360;
 		if (angle < 0) angle += 360;
 
-		image.rotate(-ang);
+		image.rotate( -ang );
 
-		updateHit();
+		updateHit( );
 	}
 
 	/**
@@ -109,13 +104,13 @@ public class BaseUnit
 	 * @param vec
 	 *            Vector to translate the unit with.
 	 */
-	public void translate(Vector2f vec)
+	public void translate ( Vector2f vec )
 	{
-		this.basehit.setLocation(this.basehit.getX() + vec.x,
-		                         this.basehit.getY() + vec.y);
-		this.position.add(vec);
+		this.basehit.setLocation( this.basehit.getX( ) + vec.x,
+		                          this.basehit.getY( ) + vec.y );
+		this.position.add( vec );
 
-		updateHit();
+		updateHit( );
 	}
 
 	/**
@@ -124,9 +119,9 @@ public class BaseUnit
 	 * @param x
 	 * @param y
 	 */
-	public void translate(double x, double y)
+	public void translate ( double x, double y )
 	{
-		translate(new Vector2f((float) x, (float) y));
+		translate( new Vector2f( (float) x, (float) y ) );
 	}
 
 	/**
@@ -135,28 +130,28 @@ public class BaseUnit
 	 * @param speed
 	 *            Distance to move.
 	 */
-	public void move(float speed)
+	public void move ( float speed )
 	{
-		translate(Math.cos(getReversedRadAngle()) * speed,
-		          Math.sin(getReversedRadAngle()) * speed);
+		translate( Math.cos( getReversedRadAngle( ) ) * speed,
+		           Math.sin( getReversedRadAngle( ) ) * speed );
 	}
 
-	public boolean hits(BaseUnit unit)
+	public boolean hits ( BaseUnit unit )
 	{
-		return hit.intersects(unit.getHit()) || unit.getHit().contains(hit);
+		return hit.intersects( unit.getHit( ) )
+		        || unit.getHit( ).contains( hit );
 	}
 
 	/**
 	 * Updates the rotated hitshape to match current rotation and location.
 	 */
-	private void updateHit()
+	private void updateHit ( )
 	{
-		hit = basehit.transform(Transform
-		        .createRotateTransform(getReversedRadAngleF(),
-		                               basehit.getX()
-		                                       + (basehit.getWidth() / 2),
-		                               basehit.getY()
-		                                       + (basehit.getHeight() / 2)));
+		hit = basehit.transform( Transform
+		        .createRotateTransform( getReversedRadAngleF( ), basehit.getX( )
+		                                        + (basehit.getWidth( ) / 2),
+		                                basehit.getY( )
+		                                        + (basehit.getHeight( ) / 2) ) );
 	}
 
 	/* ##### Getters ##### */
