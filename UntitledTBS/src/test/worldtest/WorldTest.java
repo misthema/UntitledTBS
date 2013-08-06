@@ -91,9 +91,16 @@ public class WorldTest extends BasicGame
 	{
 		cam.startRender( g );
 
-		worldman.getTileManager( ).render( );
+		int startX = (int) cam.getPosition( ).x;
+		int startY = (int) cam.getPosition( ).y;
+		int width = (int) (gc.getScreenWidth( ) / cam.getZoom( ));
+		int height = (int) (gc.getScreenHeight( ) / cam.getZoom( ));
+
+		worldman.getTileManager( ).render( startX, startY, width, height );
 
 		cam.endRender( g );
+
+		g.drawString( "Camera: " + startX + ", " + startY, 0, 0 );
 	}
 
 }

@@ -34,6 +34,8 @@ public class WorldManager
 	public void init ( )
 	{
 		assert (tileManager == null) : "WorldManager.tileManager: not set!";
+		tileManager.setWorldWidth( 256 );
+		tileManager.setWorldHeight( 256 );
 
 		if (worldgen == null) worldgen = new WorldGenerator( 256, 256 );
 		worldgen.setSeed( (long) (Math.random( ) * 100000) );
@@ -54,6 +56,8 @@ public class WorldManager
 	public void init ( int w, int h, long seed, LandType type )
 	{
 		assert (tileManager == null) : "WorldManager.tileManager: not set!";
+		tileManager.setWorldWidth( w );
+		tileManager.setWorldHeight( h );
 
 		worldgen = new WorldGenerator( w, h );
 		worldgen.setSeed( seed );
@@ -69,8 +73,8 @@ public class WorldManager
 
 		HeightMap hmap = worldgen.getHeightMap( );
 
-		System.out.println( "getHeight( " + worldgen.getWidth( ) + ", "
-		        + worldgen.getHeight( ) + " )" );
+		System.out.println( "world size " + worldgen.getWidth( ) + ", "
+		        + worldgen.getHeight( ) );
 
 		for (int y = 0; y < worldgen.getHeight( ); y++)
 		{
