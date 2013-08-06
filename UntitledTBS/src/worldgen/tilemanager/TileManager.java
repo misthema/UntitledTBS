@@ -106,8 +106,13 @@ public class TileManager
 		width /= 32;
 		height /= 32;
 
-		int endX = startX + width;
-		int endY = startY + height;
+		startX = Math.max( 0, startX );
+		startX = Math.min( getWorldWidth( ), startX );
+		startY = Math.max( 0, startY );
+		startY = Math.min( getWorldWidth( ), startY );
+
+		int endX = Math.min( getWorldWidth( ), startX + width );
+		int endY = Math.min( getWorldHeight( ), startY + height );
 		int tileWidth = tileset.getTileWidth( );
 		int tileHeight = tileset.getTileHeight( );
 
