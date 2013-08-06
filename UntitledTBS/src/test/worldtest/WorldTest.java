@@ -57,21 +57,23 @@ public class WorldTest extends BasicGame
 	{
 		Input inp = gc.getInput( );
 
+		int speed = (int) (5 / cam.getZoom( ));
+
 		if (inp.isKeyDown( Input.KEY_W ))
 		{
-			cam.translate( new Vector2f( 0, -5 ) );
+			cam.translate( new Vector2f( 0, -speed ) );
 		}
 		if (inp.isKeyDown( Input.KEY_S ))
 		{
-			cam.translate( new Vector2f( 0, 5 ) );
+			cam.translate( new Vector2f( 0, speed ) );
 		}
 		if (inp.isKeyDown( Input.KEY_A ))
 		{
-			cam.translate( new Vector2f( -5, 0 ) );
+			cam.translate( new Vector2f( -speed, 0 ) );
 		}
 		if (inp.isKeyDown( Input.KEY_D ))
 		{
-			cam.translate( new Vector2f( 5, 0 ) );
+			cam.translate( new Vector2f( speed, 0 ) );
 		}
 
 		if (inp.isKeyDown( Input.KEY_Q ))
