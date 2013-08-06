@@ -1,23 +1,36 @@
 package worldgen.tilemanager;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.newdawn.slick.Image;
 
 public class TileManager
 {
 
-	private ArrayList<Tile> tiles;
-	private TileSet         tileset;
+	private HashMap<Integer, Tile> tiles;
+	private TileSet                tileset;
+	private int                    worldWidth, worldHeight;
 
 	/**
 	 * Create new TileManager.
 	 */
 	public TileManager()
 	{
-		this.tiles = new ArrayList<Tile>( );
+		this.tiles = new HashMap<Integer, Tile>( );
 		this.tileset = new TileSet( "res/gfx/tiles.png", 32, 32 );
+		worldWidth = 0;
+		worldHeight = 0;
 	}
+
+	/* @formatter:off */
+	public int getWorldWidth( ) { return this.worldWidth; }
+	public int getWorldHeight( ) { return this.worldHeight; }
+	public void setWorldWidth( int w ) { this.worldWidth = w; }
+	public void setWorldHeight( int h ) { this.worldHeight = h; }
+	/* @formatter:on */
 
 	/**
 	 * Add Tile
@@ -27,7 +40,12 @@ public class TileManager
 	 */
 	public void add ( Tile tile )
 	{
-		tiles.add( tile );
+		int x = tile.getX( );
+		int y = tile.getY( );
+		int w = getWorldWidth( );
+		int id = y * w + x;
+
+		tiles.put( id, tile );
 	}
 
 	/**
@@ -37,9 +55,12 @@ public class TileManager
 	 *            List index
 	 * @return Tile
 	 */
-	public Tile get ( int index )
+	public Tile get ( int x, int y )
 	{
-		return tiles.get( index );
+		int w = getWorldWidth( );
+		int id = y * w + x;
+
+		return tiles.get( id );
 	}
 
 	public void initTileset ( )
@@ -53,30 +74,61 @@ public class TileManager
 	public void render ( )
 	{
 
-		for (Tile tile : tiles)
+		int tileWidth = tileset.getTileWidth( );
+		int tileHeight = tileset.getTileHeight( );
+
+		Set<Entry<Integer, Tile>> set = tiles.entrySet( );
+		Iterator<Entry<Integer, Tile>> i = set.iterator( );
+
+		while (i.hasNext( ))
 		{
-			drawTile( tile, tile.getX( ) * 32, tile.getY( ) * 32 );
+			Entry<Integer, Tile> entry = i.next( );
+			Tile tile = entry.getValue( );
+			int x = tile.getX( ) * tileWidth;
+			int y = tile.getY( ) * tileHeight;
+
+			drawTile( tile, x, y );
 		}
 	}
 
 	/**
-	 * Render only partion of the map
+	 * Render only partition of the map
 	 * 
 	 * @param startX
 	 * @param startY
 	 * @param endX
 	 * @param endY
 	 */
-	public void render ( int startX, int startY, int endX, int endY )
+	public void render ( int startX, int startY, int width, int height )
 	{
-		for (Tile tile : tiles)
-		{
-			int x = tile.getX( ) * 32;
-			int y = tile.getY( ) * 32;
+		startX /= 32;
+		startY /= 32;
+		width /= 32;
+		height /= 32;
 
-			if ((x > startX && x < endX) && (y > startY && y < endY))
+		startX = Math.max( 0, startX );
+		startX = Math.min( getWorldWidth( ), startX );
+		startY = Math.max( 0, startY );
+		startY = Math.min( getWorldWidth( ), startY );
+
+		int endX = Math.min( getWorldWidth( ), startX + width );
+		int endY = Math.min( getWorldHeight( ), startY + height );
+		int tileWidth = tileset.getTileWidth( );
+		int tileHeight = tileset.getTileHeight( );
+
+		for (int y = startY; y < endY; y++)
+		{
+			for (int x = startX; x < endX; x++)
 			{
-				drawTile( tile, x, y );
+				Tile tile = get( x, y );
+
+				if (tile != null)
+				{
+					int tx = tile.getX( ) * tileWidth;
+					int ty = tile.getY( ) * tileHeight;
+
+					drawTile( tile, tx, ty );
+				}
 			}
 		}
 	}
