@@ -1,4 +1,4 @@
-package gui;
+package gui.object;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
@@ -6,38 +6,38 @@ import org.newdawn.slick.geom.Shape;
 public abstract class GUIObject
 {
 	Shape shape;
-	Image img, hoverimg;
-	float x, y;
 	boolean hover, clicked, enabled;
 
-	public GUIObject(Shape shape, Image img, Image hoverimg, float x, float y)
+	public GUIObject(Shape shape)
 	{
 		this.shape = shape;
-		this.img = img;
-		this.hoverimg = hoverimg;
-		this.x = x;
-		this.y = y;
+
 		this.hover = false;
 		this.clicked = false;
 		this.enabled = true;
 	}
 
-	public void render ( )
-	{
-		if (hover) hoverimg.draw( x, y );
-		else img.draw( x, y );
-	}
+	public abstract void update ( );
+
+	public abstract void render ( );
+
+	public abstract void render ( float x, float y );
+
+	public void click ( int x, int y )
+	{}
 
 	/* @formatter:off */
 
 	public void      setHover   ( boolean v )     { this.hover = v; }
 	public void      setClicked ( boolean click ) { this.clicked = click; }
-	public void      setEnabled ( boolean t)      { this.enabled = t; }
-
+	public void      enable     ( )               { this.enabled = true; }
+	public void      disable    ( )               { this.enabled = false; }
+	
+	public GUIObject getObject  ( int id )        { return this; }
 	public Shape     getShape   ( )               { return shape; }
-	public boolean   getClicked ( )               { return clicked; }
 	public boolean   getHover   ( )               { return hover; }
-	public boolean   getEnabled ( )               { return enabled; }
+	public boolean   isEnabled  ( )               { return enabled; }
+	public boolean   isClicked  ( )               { return clicked; }
 	
 	/* @formatter:on */
 }

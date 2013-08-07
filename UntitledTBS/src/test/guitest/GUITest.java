@@ -13,37 +13,33 @@ public class GUITest extends StateBasedGame
 
 	public GUITest(String name)
 	{
-		super(name);
+		super( name );
 	}
 
 	@Override
-	public void initStatesList(GameContainer gc) throws SlickException
+	public void initStatesList ( GameContainer gc ) throws SlickException
 	{
-		this.addState(new MenuState());
+		this.addState( new MenuState( ) );
 	}
 
-	public static void main(String[] args)
+	public static void main ( String[] args )
 	{
 		try
 		{
-			StateBasedGame game = new GUITest("GUI test");
+			StateBasedGame game = new GUITest( "GUI test" );
 
-			AppGameContainer app = new AppGameContainer(game);
-			app.setDisplayMode(800,
-			                   600,
-			                   false);
-			app.setShowFPS(true);
-			app.setTargetFrameRate(60);
-			app.start();
-		}
-		catch (SlickException e)
+			AppGameContainer app = new AppGameContainer( game );
+			app.setDisplayMode( 800, 600, false );
+			app.setShowFPS( true );
+			app.setTargetFrameRate( 60 );
+			app.start( );
+		} catch (SlickException e)
 		{
-			e.printStackTrace();
-			System.out.println("Error occurred in Slick operation.");
-		}
-		catch (Exception e)
+			e.printStackTrace( );
+			System.out.println( "Error occurred in Slick operation." );
+		} catch (Exception e)
 		{
-			e.printStackTrace();
+			e.printStackTrace( );
 		}
 	}
 }
