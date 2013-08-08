@@ -38,6 +38,7 @@ public abstract class GUIObject
 	public boolean   getHover   ( )               { return hover; }
 	public boolean   isEnabled  ( )               { return enabled; }
 	public boolean   isClicked  ( )               { return clicked; }
+	public boolean   isHovered  ( )               { return hover; }
 	
 	/* @formatter:on */
 }

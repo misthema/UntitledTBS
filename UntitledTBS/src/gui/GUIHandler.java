@@ -75,6 +75,7 @@ public class GUIHandler
 		{
 			if (object.isEnabled( ))
 			{
+				object.setClicked( false );
 				Shape shape = object.getShape( );
 				shape.setLocation( shape.getX( ) + x, shape.getY( ) + y );
 				if (shape.contains( mouseX, mouseY ))
@@ -86,12 +87,13 @@ public class GUIHandler
 						object.setClicked( true );
 						object.click( mouseX, mouseY );
 						focus = object;
-					} else object.setClicked( false );
+					}
 				} else
 				{
 					object.setHover( false );
 				}
 				shape.setLocation( shape.getX( ) - x, shape.getY( ) - y );
+				object.update( );
 			}
 		}
 

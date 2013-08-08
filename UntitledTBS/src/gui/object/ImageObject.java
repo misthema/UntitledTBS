@@ -5,22 +5,21 @@ import org.newdawn.slick.geom.Shape;
 
 public class ImageObject extends GUIObject
 {
-	Image img, hoverimg;
-	float x, y;
+	protected Image img;
+	protected float x;
+	protected float y;
 
-	public ImageObject(Shape shape, Image img, Image hoverimg, float x, float y)
+	public ImageObject(Shape shape, Image img, float x, float y)
 	{
 		super( shape );
 		this.img = img;
-		this.hoverimg = hoverimg;
 		this.x = x;
 		this.y = y;
 	}
 
 	public void render ( )
 	{
-		if (hover) hoverimg.draw( x, y );
-		else img.draw( x, y );
+		img.draw( x, y );
 	}
 
 	@Override
@@ -32,8 +31,7 @@ public class ImageObject extends GUIObject
 	@Override
 	public void render ( float offx, float offy )
 	{
-		if (hover) hoverimg.draw( x + offx, y + offy );
-		else img.draw( x + offx, y + offy );
+		img.draw( x + offx, y + offy );
 	}
 
 }
