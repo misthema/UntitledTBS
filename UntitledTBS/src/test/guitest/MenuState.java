@@ -1,6 +1,7 @@
 package test.guitest;
 
 import gui.GUIHandler;
+import gui.object.menu.MenuButton;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -13,7 +14,9 @@ public class MenuState extends BasicGameState
 {
 	static class GUI
 	{
-		public static final int EXIT = 0;
+		public static final int MENU  = 0;
+		public static final int START = 0;
+		public static final int EXIT  = 1;
 	}
 
 	StateBasedGame game;
@@ -29,7 +32,9 @@ public class MenuState extends BasicGameState
 		this.game = game;
 		this.gui = new GUIHandler( );
 
-		gui.add( GUI.EXIT, MenuButton.create( "res/guitest/button1" ) );
+		GUIHandler menu = new GUIHandler( 200, 200 );
+		menu.add( GUI.EXIT, MenuButton.create( "res/guitest/button1", 0, 0 ) );
+		gui.add( GUI.MENU, menu );
 	}
 
 	@Override
@@ -39,7 +44,8 @@ public class MenuState extends BasicGameState
 		Input i = gc.getInput( );
 
 		gui.update( i );
-		if (gui.getObject( GUI.EXIT ).getClicked( )) gc.exit( );
+		if (gui.getHandler( GUI.MENU ).getObject( GUI.EXIT ).isClicked( ))
+		    gc.exit( );
 	}
 
 	@Override
