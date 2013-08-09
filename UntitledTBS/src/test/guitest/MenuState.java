@@ -1,7 +1,7 @@
 package test.guitest;
 
 import gui.GUIHandler;
-import gui.object.menu.MenuButton;
+import gui.object.menu.GUIButton;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -33,7 +33,7 @@ public class MenuState extends BasicGameState
 		this.gui = new GUIHandler( );
 
 		GUIHandler menu = new GUIHandler( 200, 200 );
-		menu.add( GUI.EXIT, MenuButton.create( "res/guitest/button1", 0, 0 ) );
+		menu.add( GUI.EXIT, new GUIButton( "res/guitest/button1", 0, 0 ) );
 		gui.add( GUI.MENU, menu );
 	}
 
