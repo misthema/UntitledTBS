@@ -17,9 +17,7 @@ public class WorldManager
 	 * Create new WorldManager.
 	 */
 	public WorldManager()
-	{
-
-	}
+	{}
 
 	/* @formatter:off */
 	public TileManager getTileManager( ) { return this.tileManager; }
@@ -100,11 +98,11 @@ public class WorldManager
 				{
 					tt = TileType.WATER_SHALLOW;
 
-				} else if (height >= -0.5 && height < -0.33)
+				} else if (height >= -0.5 && height < -0.4)
 				{
 					tt = TileType.LAND_SHORE;
 
-				} else if (height >= -0.33 && height < 0.33)
+				} else if (height >= -0.4 && height < 0.33)
 				{
 					tt = TileType.LAND_GRASS;
 
@@ -115,6 +113,7 @@ public class WorldManager
 				}
 
 				tileManager.add( new Tile( x, y, tt ) );
+				tileManager.addNoise( x, y, new Float( height ) );
 
 			}
 		}

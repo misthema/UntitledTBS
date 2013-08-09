@@ -48,7 +48,7 @@ public class WorldTest extends BasicGame
 		cam = new Camera( 0, 0 );
 
 		worldman = new WorldManager( );
-		worldman.setTileManager( new TileManager( ) );
+		worldman.setTileManager( new TileManager( gc.getGraphics( ) ) );
 		worldman.init( );
 	}
 
@@ -59,6 +59,7 @@ public class WorldTest extends BasicGame
 
 		int speed = (int) (5 / cam.getZoom( ));
 
+		// Camera movement
 		if (inp.isKeyDown( Input.KEY_W ))
 		{
 			cam.translate( new Vector2f( 0, -speed ) );
@@ -76,6 +77,7 @@ public class WorldTest extends BasicGame
 			cam.translate( new Vector2f( speed, 0 ) );
 		}
 
+		// Camera zoom
 		if (inp.isKeyDown( Input.KEY_Q ))
 		{
 			cam.setZoom( cam.getZoom( ) - 0.01f );
@@ -83,6 +85,15 @@ public class WorldTest extends BasicGame
 		if (inp.isKeyDown( Input.KEY_E ))
 		{
 			cam.setZoom( cam.getZoom( ) + 0.01f );
+		}
+
+		// DEBUG :: Noise data
+		if (inp.isKeyDown( Input.KEY_N ))
+		{
+			worldman.getTileManager( ).setShowNoiseData( true );
+		} else
+		{
+			worldman.getTileManager( ).setShowNoiseData( false );
 		}
 	}
 

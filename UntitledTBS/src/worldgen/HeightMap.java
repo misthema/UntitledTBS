@@ -2,7 +2,7 @@ package worldgen;
 
 public class HeightMap
 {
-	private float[][]   heightmap;
+	float[][]           heightmap;
 
 	private float       waterLevel;
 
@@ -74,6 +74,21 @@ public class HeightMap
 			return toHeight( heightmap[x][y] );
 		}
 		return -1.0f;
+	}
+
+	public void setHeightValue ( int x, int y, float val )
+	{
+		if (x >= 0 && x < heightmap.length && y >= 0 && y < heightmap[0].length)
+		{
+			val = (val + 1.f) / 2.f;
+			val = (float) Math.min( 1.0, Math.max( -1.0, val ) );
+			heightmap[x][y] = val;
+		} else
+		{
+			String msg = "HeightMap.setHeightValue():"
+			        + "Trying to set height value out of bounds!";
+			System.out.println( msg );
+		}
 	}
 
 	/*
