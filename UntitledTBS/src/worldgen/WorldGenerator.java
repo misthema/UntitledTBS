@@ -120,11 +120,7 @@ public class WorldGenerator
 
 				float p3 = blend( p1 * 255f, p2 * 255f, 0 );
 
-				// if (h < -0.4)
-				// {
-				// p3 = blend( p1 * 255f, p2 * 255f, 0 );
-				// }
-
+				// TODO Proper getter function
 				heightMap.heightmap[x][y] = p3 / 255f;
 			}
 		}
