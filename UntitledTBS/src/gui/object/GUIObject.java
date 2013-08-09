@@ -3,12 +3,42 @@ package gui.object;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 
+/**
+ * Base abstract class for all objects, containing required methods and fields.
+ * 
+ * @author Jani
+ * 
+ */
 public abstract class GUIObject
 {
 	Shape shape;
 	boolean hover, clicked, enabled;
 
+	/**
+	 * Creates a new object. Field instantion must be done through childclass'
+	 * init.
+	 */
+	public GUIObject()
+	{}
+
+	/**
+	 * Creates a new object and initializes required fields.
+	 * 
+	 * @param shape
+	 *            Shape for the object.
+	 */
 	public GUIObject(Shape shape)
+	{
+		this.init( shape );
+	}
+
+	/**
+	 * Initialize the object. Must be called before any usage of the class.
+	 * 
+	 * @param shape
+	 *            Shape for the object.
+	 */
+	protected void init ( Shape shape )
 	{
 		this.shape = shape;
 
@@ -21,8 +51,23 @@ public abstract class GUIObject
 
 	public abstract void render ( );
 
+	/**
+	 * 
+	 * @param x
+	 *            Render offset X.
+	 * @param y
+	 *            Render offset Y.
+	 */
 	public abstract void render ( float x, float y );
 
+	/**
+	 * Event handler for click on object.
+	 * 
+	 * @param x
+	 *            Mouse X
+	 * @param y
+	 *            Mouse Y
+	 */
 	public void click ( int x, int y )
 	{}
 
@@ -35,7 +80,6 @@ public abstract class GUIObject
 	
 	public GUIObject getObject  ( int id )        { return this; }
 	public Shape     getShape   ( )               { return shape; }
-	public boolean   getHover   ( )               { return hover; }
 	public boolean   isEnabled  ( )               { return enabled; }
 	public boolean   isClicked  ( )               { return clicked; }
 	public boolean   isHovered  ( )               { return hover; }
