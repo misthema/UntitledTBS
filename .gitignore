@@ -1,9 +1,6 @@
 *.pydevproject
-bin/*
-bin/**
-bin/**/*
-tmp/**
-tmp/**/*
+bin/
+tmp/
 *.tmp
 *.bak
 *.swp
