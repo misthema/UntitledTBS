@@ -1,6 +1,5 @@
 package gui.object;
 
-import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Shape;
 
 /**
@@ -47,7 +46,12 @@ public abstract class GUIObject
 		this.enabled = true;
 	}
 
-	public abstract void update ( );
+	public void remove ( )
+	{
+
+	}
+
+	public abstract void update ( boolean focus );
 
 	public abstract void render ( );
 

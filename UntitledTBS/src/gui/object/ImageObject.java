@@ -37,7 +37,7 @@ public class ImageObject extends GUIObject
 	}
 
 	@Override
-	public void update ( )
+	public void update ( boolean focus )
 	{
 
 	}
