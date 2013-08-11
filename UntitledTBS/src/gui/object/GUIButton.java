@@ -1,11 +1,9 @@
-package gui.object.menu;
+package gui.object;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
-
-import gui.object.ImageObject;
 
 /**
  * GUI element, which has graphical impact when clicked.

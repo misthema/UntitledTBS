@@ -18,6 +18,7 @@ public class GUIHandler
 	HashMap<Integer, GUIHandler> handlers;
 	GUIObject                    focus;
 	float                        x, y;
+	GUIHandler                   focusHandler;
 
 	/**
 	 * Creates a new GUIHandler.
@@ -77,6 +78,7 @@ public class GUIHandler
 	 */
 	public void removeObject ( int id )
 	{
+		GUIObject object = this.objects.get( id );
 		this.objects.remove( id );
 	}
 
@@ -140,11 +142,12 @@ public class GUIHandler
 	public void update ( Input i )
 	{
 		boolean mousePressed = i.isMousePressed( Input.MOUSE_LEFT_BUTTON );
-		update( i, mousePressed );
+		update( i, mousePressed, true );
 	}
 
-	protected void update ( Input i, boolean mousePressed )
+	protected boolean update ( Input i, boolean mousePressed, boolean focusHere )
 	{
+		boolean ret = false;
 		int mouseX = i.getMouseX( );
 		int mouseY = i.getMouseY( );
 		for (GUIObject object : objects.values( ))
@@ -163,18 +166,21 @@ public class GUIHandler
 						object.setClicked( true );
 						object.click( mouseX, mouseY );
 						focus = object;
+						ret = true;
 					}
 				} else
 				{
 					object.setHover( false );
 				}
 				shape.setLocation( shape.getX( ) - x, shape.getY( ) - y );
-				object.update( );
+				object.update( focusHere && (focus == object) );
 			}
 		}
 
 		for (GUIHandler handler : handlers.values( ))
-			handler.update( i, mousePressed, x, y );
+			if (handler.update( i, mousePressed, handler == focusHandler, x, y ))
+			    focusHandler = handler;
+		return ret;
 	}
 
 	/**
@@ -193,13 +199,15 @@ public class GUIHandler
 		this.y -= offy;
 	}
 
-	public void update ( Input i, boolean mousePressed, float offx, float offy )
+	public boolean update ( Input i, boolean mousePressed, boolean focusHere,
+	                        float offx, float offy )
 	{
 		this.x += offx;
 		this.y += offy;
-		update( i, mousePressed );
+		boolean ret = update( i, mousePressed, focusHere );
 		this.x -= offx;
 		this.y -= offy;
+		return ret;
 	}
 
 	/**
@@ -238,6 +246,22 @@ public class GUIHandler
 	public GUIHandler getHandler ( int id )
 	{
 		return handlers.get( id );
+	}
+
+	public GUIObject getFocusedObject ( )
+	{
+		if (focusHandler != null) return focusHandler.getFocusedObject( );
+		else return focus;
+	}
+
+	public GUIObject getFocus ( )
+	{
+		return focus;
+	}
+
+	public GUIHandler getFocusedHandler ( )
+	{
+		return focusHandler;
 	}
 
 	public void setLocation ( float x, float y )
