@@ -181,8 +181,7 @@ public class InputField extends TextLabel implements KeyListener
 					text = text.substring( 0, cursorPos - 1 )
 					        + text.substring( cursorPos );
 					// updateVisibleText( );
-					cursorLeft( );
-					// scrollLeft( );
+					if (!scrollLeft( )) cursorLeft( );
 				}
 				break;
 			case Input.KEY_LEFT:
@@ -202,6 +201,8 @@ public class InputField extends TextLabel implements KeyListener
 				}
 				break;
 		}
+		if (cursorPos > text.length( )) cursorPos = text.length( );
+		if (cursorPos < 0) cursorPos = 0;
 		updateVisibleText( );
 		return true;
 	}
@@ -221,14 +222,18 @@ public class InputField extends TextLabel implements KeyListener
 		else scrollLeft( );
 	}
 
-	public void scrollLeft ( )
+	public boolean scrollLeft ( )
 	{
 		if (sideScrollPos > 0) sideScrollPos--;
+		else return false;
+		return true;
 	}
 
-	public void scrollRight ( )
+	public boolean scrollRight ( )
 	{
 		if (sideScrollPos < text.length( ) - charWidth) sideScrollPos++;
+		else return false;
+		return true;
 	}
 
 	public void startFlashTimer ( )
